@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>JustDoIt! - Reporte de Tareas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+<div class="container">
+
+    <!-- Left column -->
+    <aside class="sidebar">
+        <div class="logo">
+            <a th:href="@{/}"><img th:src="@{/images/JustDoIt.png}" alt="JustDoIt Logo" width="200" height="200"></a>
+        </div>
+
+        <nav class="navigation">
+            <h3>Tareas</h3>
+            <ul>
+                <li><a th:href="@{/user/tasks}">Tareas de usuario actual</a></li>
+                <li><a th:href="@{/user/tasks/report}">Reporte de tareas</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="content">
+        <h1>Reporte de tareas del usuario</h1>
+
+        <div th:replace="fragments/user-info :: userInfo"></div>
+
+        <table border="1">
+            <tr>
+                <th>Tarea</th>
+                <th>Estado</th>
+                <th>Fecha Límite</th>
+            </tr>
+            <tr th:each="task : ${user.tasks}">
+                <td th:text="${task.description}">
+                </td>
+                <td>
+                    <span th:if="${task.status.name() == 'PENDING'}">Pendiente</span>
+                    <span th:if="${task.status.name() == 'INPROGRESS'}">En progreso</span>
+                    <span th:if="${task.status.name() == 'DONE'}">Completada</span>
+                </td>
+                <td>
+                    <span th:if="${task.deadline != null}" th:text="${#temporals.format(task.deadline, 'dd/MMMM/yyyy')}">No especificada</span>
+                    <span th:if="${task.deadline == null}">No especificada</span>
+                </td>
+            </tr>
+        </table>
+    </main>
+</div>
+</body>
+</html>

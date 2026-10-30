@@ -28,6 +28,11 @@ public class UserTasksController {
         return usr;
     }
 
+    // En un futuro lab agregar un otro controlador a esta ruta
+    @GetMapping("/report")
+    public String Reporte() {
+        return "reportetareas";
+    }
 
     @GetMapping
     public String showUserTasks(Model model) {
